@@ -1,0 +1,375 @@
+/*-FONT-___________________________________________________________________*/
+@font-face {
+    font-family: "Norsebold";
+    src: url(../font/Norsebold.otf);
+}
+
+@font-face {
+    font-family: "Lindisfarne";
+    src: url(../font/Lindisfarne\ Nova\ BT\ Roman.ttf)
+}
+
+/*-HEADER-_________________________________________________________________*/
+header {
+    width: 100%;
+    height: 600px;
+    background-image: url(../img/headerBackground.jpg);
+}
+
+h1 {
+    text-align: center;
+    font-family: "Norsebold";
+    font-size: 8em;
+    color: rgba(7, 36, 70, 0.877);
+    padding-top: 15px;
+}
+
+h2 {
+    text-align: center;
+    font-family: "Norsebold";
+    font-size: 3em;
+    color: rgba(7, 60, 70, 0.7)
+
+}
+
+h3 {
+    text-align: center;
+    font-family: "Norsebold";
+    font-size: 2em;
+    color: antiquewhite;
+    opacity: 0.85;
+}
+
+/*-BODY-___________________________________________________________________*/
+.bodyBackground {
+    background-image: url(../img/bodyBackground.jpg);
+    height: 1024px;
+    width: 1900px;
+}
+
+/*-HARALD-___________________________________________________________________*/
+.infoHarald {
+    position: absolute;
+    top: 720px;
+    left: 1476px;
+    width: 340px;
+    height: 715px;
+}
+
+#healthResultF,
+#powerResultF,
+#weaponNameF,
+#healthResultH,
+#powerResultH,
+#weaponNameH{
+    padding-top: 10px;
+    font-family: "Norsebold";
+    color: rgba(7, 60, 70, 0.7);
+    text-align: center;
+}
+
+/*FREYDIS*/
+.infoFreydis {
+    position: absolute;
+    top: 720px;
+    left: 80px;
+    width: 340px;
+    height: 715px;
+}
+
+
+
+
+/*-HARALD&FREYDIS-_________________________________________________________*/
+.name {
+    color: rgba(7, 60, 70, 0.7);
+    font-family: Norsebold;
+    font-size: 3em;
+    text-align: center;
+    width: 340px;
+    height: 100px;
+    padding-top: 5px;
+}
+
+.health,
+.power,
+.weapon {
+    color: rgba(7, 60, 70, 0.7);
+    font-family: Norsebold;
+    font-size: 1.65em;
+    text-align: center;
+    width: 340px;
+    padding-top: 20px;
+}
+
+#infoH {
+    color: rgba(7, 60, 70, 0.7);
+    font-family: Norsebold;
+    font-size: 1.75em;
+    text-align: center;
+    width: 340px;
+    padding-top: 80px;
+}
+
+#infoF {
+    color: rgba(7, 60, 70, 0.7);
+    font-family: Norsebold;
+    font-size: 1.75em;
+    text-align: center;
+    width: 340px;
+    padding-top: 80px;
+}
+
+#myBtnF,
+#myBtn {
+    background-color: rgba(250, 235, 215, 0);
+    color: rgb(7, 60, 70);
+    position: absolute;
+    left: 30px;
+    padding: 10px;
+    font-family: "Norsebold";
+    border-radius: 15px;
+    top: 380px;
+    left: 135px;
+}
+
+#myBtnF:hover,
+#myBtn:hover {
+    background-color: #365B61;
+    color: #F0E4CA;
+}
+
+/*-MODAL-__________________________________________________________________*/
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    padding-top: 100px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0, 0, 0);
+    background-color: rgba(7, 60, 70, 0.8);
+}
+
+/* Modal Content */
+.modal-content {
+    position: relative;
+    background-color: antiquewhite;
+    color: rgb(7, 60, 70);
+    margin: auto;
+    padding: 0;
+    width: 25%;
+    box-shadow: 0 4px 8px 0 rgba(7, 60, 70, 0.7), 0 6px 20px 0 rgba(7, 60, 70, 0.7);
+    ;
+    -webkit-animation-name: animatetop;
+    -webkit-animation-duration: 0.4s;
+    animation-name: animatetop;
+    animation-duration: 0.4s
+}
+
+@-webkit-keyframes animatetop {
+    from {
+        top: -300px;
+        opacity: 0
+    }
+
+    to {
+        top: 0;
+        opacity: 1
+    }
+}
+
+@keyframes animatetop {
+    from {
+        top: -300px;
+        opacity: 0
+    }
+
+    to {
+        top: 0;
+        opacity: 1
+    }
+}
+
+.close {
+    color: antiquewhite;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.modal-header {
+    padding: 2px 16px;
+    background-color: rgb(7, 60, 70);
+    color: white;
+}
+
+.modal-body {
+    padding: 2px 16px;
+    font-family: "Lindisfarne";
+}
+
+.modal-footer {
+    padding: 2px 16px;
+    background-color: rgb(7, 60, 70);
+    ;
+    color: white;
+    height: 20px;
+}
+
+.outro {
+    position: fixed;
+    bottom: 0px;
+    width: 100%;
+    padding-top: 10px;
+    padding-bottom: 8px;
+    background-color: rgba(7, 60, 70, 0.788);
+    color: #F0E4CA;
+    text-align: center;
+    font-family: "Lindisfarne";
+}
+
+/*-BUTTON GAME-____________________________________________________________________*/
+
+#newgame {
+    background-color: rgba(240, 228, 202, 0.8);
+    color: rgba(7, 60, 70, 0.7);
+    position: absolute;
+    height: 50px;
+    width: 60px;
+    top: 650px;
+    left: 928px;
+    width: 40px;
+    font-family: "Norsebold";
+    font-size: 2em;
+    border-radius: 50px;
+
+}
+
+#newgame:hover {
+    background-color: #365B61;
+    color: rgba(240, 228, 202, 0.9);
+}
+
+#attack {
+    background-color:rgba(240, 228, 202, 0.8);
+    color: rgba(7, 60, 70, 0.7);
+    position: absolute;
+    top: 665px;
+    left: 850px;
+    font-family: "Norsebold";
+    font-size: 1.5em;
+    border-radius: 50px;
+}
+
+#defence {
+    background-color: rgba(240, 228, 202, 0.8);
+    color: rgba(7, 60, 70, 0.8);
+    position: absolute;
+    top: 665px;
+    left: 974px;
+    font-family: "Norsebold";
+    font-size: 1.5em;
+    border-radius: 50px;
+
+}
+
+/*-MAP-____________________________________________________________________*/
+
+#map {
+    height: 840px;
+    width: 840px;
+    position: absolute;
+    left: 530px;
+    top: 700px;
+}
+
+.cell {
+    width: 84px;
+    height: 84px;
+    border: ridge rgba(240, 228, 202, 0.8) 2px;
+
+}
+
+/*-OBJECTMAP-______________________________________________________________*/
+.wall {
+    background-image: url("../img/wall.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 80px;
+    height: 80px;
+}
+
+.knife {
+    background-image: url("../img/knife.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    margin: auto;
+    width: 80px;
+    height: 80px;
+}
+
+.axe {
+    background-image: url("../img/axe.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    margin: auto;
+    width: 80px;
+    height: 80px;
+}
+
+.sword {
+    background-image: url("../img/sword.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    margin: auto;
+    width: 80px;
+    height: 80px;
+}
+
+.spear {
+    background-image: url("../img/spear.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    margin: auto;
+    width: 80px;
+    height: 80px;
+}
+
+/*-WAR HEROS-_________________________________________________________________________________ */
+.freydis {
+    background-image: url("../img/heroes1.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    margin: auto;
+    width: 80px;
+    height: 80px;
+}
+
+.harald {
+    background-image: url("../img/heroes2.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    margin: auto;
+    width: 80px;
+    height: 80px;
+}
+
+/*-MOVE-_______________________________________________________________________________________*/
+.move1 {
+    background-color: rgba(105, 44, 6, 0.6);
+}
+
+.move2 {
+    background-color: rgba(53, 90, 94, 0.6);
+}

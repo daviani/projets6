@@ -1,0 +1,137 @@
+<!DOCTYPE <!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>NordmandR</title>
+    <link rel="stylesheet" type="text/css" media="screen" href="css/reset.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="css/style.css" />
+</head>
+
+<body>
+    <header>
+        <h1>-NordmadR-</h1>
+        <h2>-A Viking board game-</h2>
+    </header>
+    <div class="bodyBackground">
+        <button id="newgame" onclick="game.new();">GO</button>
+        <button id="attack" onclick="game.heroes.attack();">Attack</button>
+        <button id="defence" onclick="game.heroes.defence();">defence</button>
+    </div>
+
+
+
+    <div class="infoFreydis">
+        <p class="name">
+            Freydís Eiríksdóttir
+        </p>
+        <p class="health">
+            health :<br>
+            <p id="healthResultF"></p>
+        </p>
+        <p class="power">
+            Power : <br>
+            <p id="powerResultF"></p>
+        </p>
+        <p class="weapon">
+            Weapon name : <br>
+            <p id="weaponNameF"></p>
+        </p>
+
+        <button id="myBtnF">More info's</button>
+
+        <div id="myModalF" class="modal">
+
+            <div class="modal-content">
+                <div class="modal-header">
+                    <span class="closeF">&times;</span>
+                    <h3>Freydís Eiríksdóttir</h3>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        Freydis born in Iceland around 970.
+                        <br> Daughter of the famous Erik Thorvaldsson called Erik the Red.
+                        <br> She led several expeditions on the lands of Vinland (northeastern Canada today), where she
+                        terrorized the Skrælingjar in Icelandic
+                        (Amerindian people).
+                        <br> Freydís is a perfect example of the integration of women into Scandinavian society.
+                    </p>
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="infoHarald">
+        <p class="name">
+            harald sigurdsson
+        </p>
+        <p class="health">
+            health :<br>
+            <p id="healthResultF"></p>
+        </p>
+        <p class="power">
+            Power : <br>
+            <p id="powerResultF"></p>
+        </p>
+        <p class="weapon">
+            Weapon name : <br>
+            <p id="weaponNameH"></p>
+        </p>
+
+        <button id="myBtn">More info's</button>
+
+        <div id="myModal" class="modal">
+
+            <div class="modal-content">
+                <div class="modal-header">
+                    <span class="closeH">&times;</span>
+                    <h3>Harald Sigurdsson</h3>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        <br>Son of Sigurd Syr, one of the kings of the Kingdom of Ringerike in Norway, Harald lives
+                        by day around 1015.
+                        <br>Better known as Harald Hardrada, he is often considered to be the last king of the
+                        Viking era.
+                        <br>Following a revolt, he first went into exile in Kiev's Rus', then to Constantinople
+                        where he became head of the Varangian guard.
+                        <br>Around 1045, he returned to Norway and acquired the title of King of Norway.
+                        <br>His last battle was on September 25, 1066 at Stamford Bridge near York, in the Saxon
+                        kingdom.
+                        <br>He was a great genius of war whose feats of arms will inspire many of today's
+                        historical reconstructions.
+                    </p>
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <table id="map"></table>
+
+    <footer>
+        <p class="outro">
+            The initial goal of this project is to show the know-how I acquired during the realization of this project.
+            But also highlight
+            two heroes of the Viking age in Scandinavia, history will have retained the multiple battles they fought.
+            The
+            hero fights inspire me to the daily and I like to make a connection that they led and my professional
+            reconversion,
+            indeed, it is in both cases a fights of each moment, each stage is a new test that I have so far,
+            successful!
+            <br>
+            Games made by Fillatre Daviani as part of the OpenClassrooms Frontend Application Developer course.
+        </p>
+    </footer>
+    <script src="js/jquery-3.3.1.js"></script>
+    <script type="text/javascript" src="js/game.js"></script>
+    <script type="text/javascript" src="js/map.js"></script>
+    <script type="text/javascript" src="js/heroes.js"></script>
+    <script type="text/javascript" src="js/modal.js"></script>
+
+</body>
+
+</html>
