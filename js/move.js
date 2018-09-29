@@ -1,39 +1,40 @@
 game.move = {} // constructor
 
 
-//-ADD MOVECLASS-________________________________________________________________________________
+//-ADD CLASS MOVE-________________________________________________________________________________
 /*
 @currentHeroes === select the heroes whose turn it is 
 @xClassMove === coordonate X classMove
 @yClassMove === coordonate X classMove
 @eltRight === define the cells on the right on which classMove applies
 @eltLeft === define the cells on the left on which classMove applies
-@eltUp === define the cells on the up on which classMove applies
-@eltDown === define the cells on the down on which classMove applies
+@eltUp== define the cells on the up on which classMove applies
+@eltDown== define the cells on the down on which classMove applies
 */
+
 game.move.classMove = function () {
 
     var currentHeroes = game.heroes.turn,
         xClassMove = parseInt(game.heroes[currentHeroes].xPosition),
         yClassMove = parseInt(game.heroes[currentHeroes].yPosition);
+
     //right --------------------------------------------------------------------------------------
     for (var i = 1; i < 4; i++) {
-        var elt = document.querySelector(".cell[X='" + (xClassMove + i) + "'][Y='" + yClassMove + "']")
-        if (elt) {
-            if ((elt.getAttribute("type") === "wall") || (elt.getAttribute("type") === "heroes")) {
+        var eltRight = document.querySelector(".cell[X='" + (xClassMove + i) + "'][Y='" + yClassMove + "']")
+        if (eltRight) {
+            if ((eltRight.getAttribute("type") === "wall") || (eltRight.getAttribute("type") === "heroes")) {
                 break;
-            } else if ((elt.getAttribute("type") === "") || (elt.getAttribute("type") === "weapon")) {
-                if (elt.getAttribute("type") === "") {
-                    elt.setAttribute("type", "move");
-                } else if (elt.getAttribute("type") === "weapon") {
-                    elt.setAttribute("type", "move + weapon");
+            } else if ((eltRight.getAttribute("type") === "") || (eltRight.getAttribute("type") === "weapon")) {
+                if (eltRight.getAttribute("type") === "") {
+                    eltRight.setAttribute("type", "move");
+                } else if (eltRight.getAttribute("type") === "weapon") {
+                    eltRight.setAttribute("type", "move + weapon");
                 };
-                elt.classList.add("move" + currentHeroes);
-                elt.addEventListener("click", game.move.clickMove, false);
+                eltRight.classList.add("move" + currentHeroes);
+                eltRight.addEventListener("click", game.move.clickMove, false);
             };
         };
     };
-
     // left -------------------------------------------------------------------------------------
     for (var i = 1; i < 4; i++) {
         var eltLeft = document.querySelector(".cell[X='" + (xClassMove - i) + "'][Y='" + yClassMove + "']");
@@ -88,59 +89,134 @@ game.move.classMove = function () {
         };
     };
 
-    //test fight? --------------------------------------------------------------------------------------
-    var eltRightFight = document.querySelector(".cell[X='" + (xClassMove + 1) + "'][Y='" + yClassMove + "']"),
-        eltLeftFight = document.querySelector(".cell[X='" + (xClassMove - 1) + "'][Y='" + yClassMove + "']"),
-        eltUpFight = document.querySelector(".cell[X='" + xClassMove + "'][Y='" + (yClassMove + 1) + "']"),
-        eltDownFight = document.querySelector(".cell[X='" + xClassMove + "'][Y='" + (yClassMove - 1) + "']");
+    //fight ?? ----------------------------------------------------------------------------------
+    var elt1 = document.querySelector(".cell[X='" + xClassMove + "'][Y='" + (yClassMove - 1) + "']"),
+        elt2 = document.querySelector(".cell[X='" + xClassMove + "'][Y='" + (yClassMove + 1) + "']"),
+        elt3 = document.querySelector(".cell[X='" + (xClassMove - 1) + "'][Y='" + yClassMove + "']"),
+        elt4 = document.querySelector(".cell[X='" + (xClassMove + 1) + "'][Y='" + yClassMove + "']");
 
-        if (eltRightFight) {
-            if(eltRightFight.getAttribute("type") === "heroes") {
-                game.heroes.fight = true;
-            };
+    // if the case exists -------------------------------------------------------------------
+    if (elt1) {
+        if (elt1.getAttribute("type") === "heroes") {
+            game.heroes.fight = true;
         };
-        if (eltLeftFight) {
-            if(eltLeftFight.getAttribute("type") === "heroes") {
-                game.heroes.fight = true;
-            };
-        };
-        if (eltUpFight) {
-            if(eltUpFight.getAttribute("type") === "heroes") {
-                game.heroes.fight = true;
-            };
-        };
-        if (eltDownFight) {
-            if(eltDownFight.getAttribute("type") === "heroes") {
-                game.heroes.fight = true;
-            };
-        };
+    };
 
-        var buttonAttack = document.getElementById("attack"),
+    if (elt2) {
+        if (elt2.getAttribute("type") === "heroes") {
+            game.heroes.fight = true;
+        };
+    };
+
+    if (elt3) {
+        if (elt3.getAttribute("type") === "heroes") {
+            game.heroes.fight = true;
+        };
+    };
+
+    if (elt4) {
+        if (elt4.getAttribute("type") === "heroes") {
+            game.heroes.fight = true;
+        };
+    };
+
+    var buttonAttack = document.getElementById("attack"),
         buttonDefence = document.getElementById("defence");
+
+    if (game.heroes.fight === true) {
+        buttonAttack.disable = false;
+        buttonAttack.style.backgroundColor = "#365B61";
+        buttonAttack.style.color = "#DDD7C0";
+        buttonDefence.disable =false;
+        buttonDefence.style.backgroundColor = "#365B61";
+        buttonDefence.style.color = "##DDD7C0";
+    } else {
+        buttonAttack.disable = true;
+        buttonDefence.disable = true;
+    }
 };
 
 //-MOVEMENT -________________________________________________________________________________
-/*
-@escape === variable that is used to change turns in case of a flight during combat
-@currentHeroes === select the heroes whose turn it is
-
-@xMove0 === Original X positions 
-@yMove0 === Original Y positions 
-@eltMove0 === definitions of the values of the variables xMove0 and yMove0 on the board
-
-@xMove1 === Final X positions
-@yMove1 === Final Y positions
-@eltMove1 === definitions of the values of the variables xMove1 and yMove1 on the board
-
-@xMove === is equal to the end position minus the original position of the X axis
-@yMove === is equal to the end position minus the original position of the Y axis
-@eltXMove === selects all cells of the X axis
-@eltYMove === selects all cells of the Y axis
-*/
-
 game.move.movement = function (e) {
 
+    if (game.heroes.fight === true) {
+        var escape = (game.heroes.turn === 1) ? 2 : 1;
+        game.heroes.attack(escape);
+        game.heroes.fight = false;
+    };
 
+    var currentHeroes = game.heroes.turn,
+
+        // initiale coordinate-------------------------------------------------------------------------
+        xMove0 = parseInt(game.heroes[currentHeroes].xPosition),
+        yMove0 = parseInt(game.heroes[currentHeroes].yPosition),
+        eltMove0 = document.querySelector(".cell[X='" + xMove0 + "'][Y='" + yMove0 + "']"),
+
+        //final coordinate --------------------------------------------------------------------------
+        xMove1 = parseInt(e.target.getAttribute("X")),
+        yMove1 = parseInt(e.target.getAttribute("Y")),
+        eltMove1 = document.querySelector(".cell[X= '" + xMove1 + "'][Y = '" + yMove1 + "']"),
+
+        //weapon Test on the road --------------------------------------------------------------------
+        xMove = xMove1 - xMove0,
+        yMove = yMove1 - yMove0,
+        eltXMove = document.querySelectorAll(".cell[X= '" + xMove0 + "']"),
+        eltYMove = document.querySelectorAll(".cell[Y= '" + yMove0 + "']");
+
+    if (xMove > 0) {
+        for (var i = 0; i < xMove; i++) {
+            if (eltYMove[xMove1 - 1 - i].getAttribute("type") === "weapon") {
+                game.heroes.changeWeapon(eltYMove, (xMove1 - 1 - i));
+            };
+        };
+    } else if (xMove < 0) {
+        for (var i = 0; i < -xMove; i++) {
+            if (eltYMove[xMove1 - 1 + i].getAttribute("type") === "weapon") {
+                game.heroes.changeWeapon(eltYMove, (xMove - 1 + i));
+            };
+        };
+    } else if (yMove > 0) {
+        for (var i = 0; i < yMove; i++) {
+            if (eltXMove[yMove1 - 1 - i].getAttribute("type") === "weapon") {
+                game.heroes.changeWeapon(eltXMove, (yMove - 1 - i));
+            };
+        };
+    } else if (yMove < 0) {
+        for (var i = 0; i < -yMove; i++) {
+            if (eltXMove[yMove1 - 1 + i].getAttribute("type") === "weapon") {
+                game.heroes.changeWeapon(eltXMove, (xMove - 1 + i))
+            };
+        };
+    };
+
+    // attribute heroes class ---------------------------------------------------------------------------------------------
+    if (eltMove0 && eltMove1) {
+
+        if (eltMove1.getAttribute("type") === "weapon") { // if final cell === weapon
+            eltMove1.setAttribute("type", "heroes+weapon");
+            eltMove1.classList.remove(game.heroes[eltMove1.getAttribute("weapon")].cssCLass);
+            eltMove1.classList.add(game.heroes[currentHeroes].cssCLass);
+        } else {
+            eltMove1.setAttribute("type", "heroes");
+            eltMove1.classList.add(game.heroes[currentHeroes].cssCLass);
+        };
+
+        if (eltMove0.getAttribute("type") === "heroes+weapon") { // initial cell type === weapon+heroes
+            eltMove0.setAttribute("type", "weapon");
+            eltMove0.classList.remove(game.heroes[currentHeroes].cssCLass);
+            eltMove0.classList.add(game.heroes[eltMove0.getAttribute("weapon")].cssCLass);
+        } else {
+            eltMove0.setAttribute("type", "");
+            eltMove0.classList.remove(game.heroes[currentHeroes].cssCLass)
+        };
+
+        game.heroes[currentHeroes].xPosition = xMove1;
+        game.heroes[currentHeroes].yPosition = yMove1;
+    };
+
+    game.heroes[game.heroes.turn].action = "defence"; //fight === false
+    game.heroes.turn = (game.heroes.turn === 1) ? 2 : 1; // turn next
+    game.update();
 };
 
 //-CLICK MOVE-________________________________________________________________________________
@@ -153,5 +229,68 @@ game.move.clickMove = function (e) {
 game.move.deleteMove = function () {
 
 
+    var currentHeroes = game.heroes.turn,
+        xDelete = parseInt(game.heroes[currentHeroes].xPosition),
+        yDelete = parseInt(game.heroes[currentHeroes].yPosition);
+
+    //right --------------------------------------------------------------------------------------
+    for (var i = 1; i < 4; i++) {
+        var elt = document.querySelector(".cell[X='" + (xDelete + i) + "'][Y='" + yDelete + "']");
+        if (elt) {
+            if (elt.getAttribute("type") === ("move")) {
+                elt.setAttribute("type", "");
+                elt.classList.remove("move" + currentHeroes);
+                elt.removeEventListener("click", game.move.clickMove, false);
+            } else if (elt.getAttribute("type") === ("move + weapon")) {
+                elt.setAttribute("type", "weapon");
+                elt.classList.remove("move" + currentHeroes);
+                elt.removeEventListener("click", game.move.clickMove, false);
+            };
+        };
+    };
+    //left --------------------------------------------------------------------------------------
+    for (var i = 1; i < 4; i++) {
+        var elt = document.querySelector(".cell[X='" + (xDelete - i) + "'][Y='" + yDelete + "']");
+        if (elt) {
+            if (elt.getAttribute("type") === ("move")) {
+                elt.setAttribute("type", "");
+                elt.classList.remove("move" + currentHeroes)
+            } else if (elt.getAttribute("type") === ("move + weapon")) {
+                elt.setAttribute("type", "weapon");
+                elt.classList.remove("move" + currentHeroes);
+                elt.removeEventListener("click", game.move.clickMove, false)
+            };
+        };
+    };
+
+    //up --------------------------------------------------------------------------------------
+    for (var i = 1; i < 4; i++) {
+        var elt = document.querySelector(".cell[X='" + xDelete + "'][Y='" + (yDelete + i) + "']");
+        if (elt) {
+            if (elt.getAttribute("type") === ("move")) {
+                elt.setAttribute("type", "");
+                elt.classList.remove("move" + currentHeroes)
+            } else if (elt.getAttribute("type") === ("move + weapon")) {
+                elt.setAttribute("type", "weapon");
+                elt.classList.remove("move" + currentHeroes);
+                elt.removeEventListener("click", game.move.clickMove, false)
+            };
+        };
+    };
+
+    //down --------------------------------------------------------------------------------------
+    for (var i = 1; i < 4; i++) {
+        var elt = document.querySelector(".cell[X='" + xDelete + "'][Y='" + (yDelete - i) + "']");
+        if (elt) {
+            if (elt.getAttribute("type") === ("move")) {
+                elt.setAttribute("type", "");
+                elt.classList.remove("move" + currentHeroes)
+            } else if (elt.getAttribute("type") === ("move + weapon")) {
+                elt.setAttribute("type", "weapon");
+                elt.classList.remove("move" + currentHeroes);
+                elt.removeEventListener("click", game.move.clickMove, false)
+            };
+        };
+    };
 
 };

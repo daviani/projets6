@@ -69,8 +69,9 @@ game.heroes.addHeroes = function () {
 
     // add DOM main info-------------------------------------------------------------------------
     var currentTurn = document.getElementsByClassName("info" + game.heroes.turn),
+        newTurn = document.getElementById("info" - game.heroes.turn)
 
-        health1 = document.getElementById("health1"),
+    health1 = document.getElementById("health1"),
         power1 = document.getElementById("power1"),
         weaponName1 = document.getElementById("weapon1"),
 
@@ -78,11 +79,14 @@ game.heroes.addHeroes = function () {
         power2 = document.getElementById("power2"),
         weaponName2 = document.getElementById("weapon2");
 
-    $(currentTurn).css('opacity', 1);
-        //TO BZ CONITNUED ..........................................................FUNCTION OPACITY PLAYER
+    if (currentTurn) {
+        $(currentTurn).css('opacity', 1);
+    } else if (newTurn) {
+        $(newTurn).css('opacity', 0.6)
+    }
 
-    $('health1').append("-" + game.heroes[1].health + "-")
-    //health1.innerHTML = "-" + game.heroes[1].health + "-";
+
+    health1.innerHTML = "-" + game.heroes[1].health + "-";
     power1.innerHTML = "-" + game.weaponsBoard[game.heroes[1].weapon].damage + "-";
     weaponName1.innerHTML = "-" + game.weaponsBoard[game.heroes[1].weapon].name + "-";
 
@@ -106,20 +110,45 @@ game.heroes.info = function () {
 };
 
 //-CHANGE WEAPON-_________________________________________________________________________________
-game.heroes.weapon = function () {
+game.heroes.changeWeapon = function (elt, nb) {
+console.log(elt, nb)
+    var replace = elt[nb].getAttribute("weapon");
+    if (game.heroes[game.heroes.turn].weapon === "weapon0") {
+        elt[nb].setAttribute("weapon", "");
+        elt[nb].setAttribute("type", "");
+        game.heroes[game.heroes.turn].weapon = replace;
 
+        var updateWDamage = document.getElementById("power" + game.heroes.turn),
+            updateWName = document.getElementById("weapon" + game.heroes.turn);
 
+        updateWDamage.innerHTML = "-" + game.weaponsBoard[game.heroes[game.heroes.turn].weapon].damage + "-";
+        updateWName.innerHTML = "-" + game.weaponsBoard[game.heroes[game.heroes.turn].weapon].name + "-";
+    } else {
+        elt[nb].classList.remove(game.weaponsBoard[elt[nb].getAttribute("weapon")].cssCLass);
+        elt[nb].classList.add(game.weaponsBoard[game.heroes[game.heroes.turn].weapon].classList);
+
+        elt[nb].setAttribute("weapon", game.heroes[game.heroes.turn].weapon);
+        elt[nb].setAttribute("type", "weapon");
+
+        game.heroes[game.heroes.turn].weapon = replace;
+
+        var updateWDamage = document.getElementById("power" + game.heroes.turn),
+            updateWName = document.getElementById("weapon" + game.heroes.turn);
+
+        updateWDamage.innerHTML = "-" + game.weaponsBoard[game.heroes[game.heroes.turn].weapon].power + "-";
+        updateWName.innerHTML = "-" + game.weaponsBoard[game.heroes[game.heroes.turn].weapon].name + "-";
+    };
 };
 
 
 //-FIGHT ATTACK-_________________________________________________________________________________
-game.heroes.attack = function (away) {
+game.heroes.attack = function (escape) {
     var turn = game.heroes.turn,
         newTurn = (game.heroes.turn === 1) ? 2 : 1;
 
-    if (away) { // === fuite
+    if (escape) { // === fuite
         var awayLife = game.heroes[turn].life,
-            damage = game.weaponsRack[game.heroes[away].weapon].damage + 99;
+            damage = game.weaponsBoard[game.heroes[escape].weapon].damage + 99;
         awayLife -= damage;
         game.heroes[turn].life = awayLife;
 
@@ -129,9 +158,9 @@ game.heroes.attack = function (away) {
     } else {
         game.heroes[turn].posture = "attack";
 
-        var damage = game.weaponsRack[game.heroes[turn].weapon].damage,
+        var damage = game.weaponsBoard[game.heroes[escape].weapon].damage,
             health = game.hereos[newTurn].life;
-        if (game.heroes[newTurn].posture === "defend") {
+        if (game.heroes[newTurn].posture === "defence") {
             damage /= 2;
             health -= damage;
             game.heroes[newTurn].health = health;
@@ -150,6 +179,9 @@ game.heroes.attack = function (away) {
 };
 
 //-FIGHT DEFENCE-_________________________________________________________________________________
-game.heroes.attack = function () {
-
+game.heroes.defence = function () {
+game.heroes[game.heroes.turn].posture = "defence";
+game.move.deleteMove();
+game.heroes.turn = (game.heroes.turn=== 1) ? 2 : 1;
+game.update();
 };

@@ -90,16 +90,15 @@ game.weaponsBoard = {
 
 //-ADD WEAPON-________________________________________________________________________________
 game.map.addWeapon = function () {
-/*
-@nbWeapon === defined a number of weapons between 8 & 4
-@rdm === defined a number 1 & 4 for weapons
-@xWeapon === coordonate X Weapon
-@yWeapon === coordonate Y Weapon
-@WeaponElt === define a cell using the values of the variables : xWall & yWeapon
-*/
+    /*
+    @nbWeapon === defined a number of weapons between 8 & 4
+    @rdm === defined a number 1 & 4 for weapons
+    @xWeapon === coordonate X Weapon
+    @yWeapon === coordonate Y Weapon
+    @WeaponElt === define a cell using the values of the variables : xWall & yWeapon
+    */
 
-    var nbWeapon = 4
-    for (var i = 0; i < 1; i++) {
+    for (var i = 0; i < 2; i++) {
         var xWeapon = Math.ceil(Math.random() * 10),
             yWeapon = Math.ceil(Math.random() * 10),
 
@@ -111,11 +110,54 @@ game.map.addWeapon = function () {
             weaponElt.classList.add(game.weaponsBoard["weapon" + 1].cssClass)
         } else {
             i--
-        ;}
+        };
+    };
 
-        // TO BE CONTINUED ................................................................
-    }
+    for (var i = 0; i < 2; i++) {
+        var xWeapon = Math.ceil(Math.random() * 10),
+            yWeapon = Math.ceil(Math.random() * 10),
 
+            weaponElt = document.querySelector(".cell[X='" + xWeapon + "'][Y='" + yWeapon + "']");
+
+        if (weaponElt.getAttribute("type") === "") {
+            weaponElt.setAttribute("type", "weapon");
+            weaponElt.setAttribute("weapon", "weapon" + 2);
+            weaponElt.classList.add(game.weaponsBoard["weapon" + 2].cssClass)
+        } else {
+            i--
+        };
+    };
+
+    for (var i = 0; i < 1; i++) {
+        var xWeapon = Math.ceil(Math.random() * 10),
+            yWeapon = Math.ceil(Math.random() * 10),
+
+            weaponElt = document.querySelector(".cell[X='" + xWeapon + "'][Y='" + yWeapon + "']");
+
+        if (weaponElt.getAttribute("type") === "") {
+            weaponElt.setAttribute("type", "weapon");
+            weaponElt.setAttribute("weapon", "weapon" + 3);
+            weaponElt.classList.add(game.weaponsBoard["weapon" + 3].cssClass)
+        } else {
+            i--
+        };
+    };
+
+    for (var i = 0; i < 1; i++) {
+        var xWeapon = Math.ceil(Math.random() * 10),
+            yWeapon = Math.ceil(Math.random() * 10),
+
+            weaponElt = document.querySelector(".cell[X='" + xWeapon + "'][Y='" + yWeapon + "']");
+
+        if (weaponElt.getAttribute("type") === "") {
+            weaponElt.setAttribute("type", "weapon");
+            weaponElt.setAttribute("weapon", "weapon" + 4);
+            weaponElt.classList.add(game.weaponsBoard["weapon" + 4].cssClass)
+        } else {
+            i--
+        };
+    };
+}
 /*
 var nbWeapon = 4
 for (var i = 0; i < nbWeapon; i++) {
@@ -135,8 +177,5 @@ console.log(rdm)
 };
 }
 */
-
-}
-
 
 game.map.addMap();
