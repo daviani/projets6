@@ -1,5 +1,5 @@
-<!DOCTYPE <!DOCTYPE html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
     <meta charset="utf-8" />
@@ -11,7 +11,7 @@
 <body>
     <header>
         <h1>-NordmadR-</h1>
-        <h2>-A Viking board game-</h2>
+        <h2>-A Viking board game without honor-</h2>
     </header>
     <div class="bodyBackground">
         <button id="newgame" onclick="game.new();">GO</button>
@@ -21,23 +21,31 @@
 
 
 
-    <div class="infoFreydis">
-        <p class="name">
+    <div class="info1">
+        <h2 class="name">
             Freydís Eiríksdóttir
-        </p>
+        </h2>
         <p class="health">
             health :<br>
-            <p id="healthResultF"></p>
+            <p id="health1">
+
+            </p>
         </p>
         <p class="power">
             Power : <br>
-            <p id="powerResultF"></p>
+            <p id="power1">
+
+            </p>
         </p>
         <p class="weapon">
             Weapon name : <br>
-            <p id="weaponNameF"></p>
+            <p id="weapon1">
+
+            </p>
         </p>
 
+    </div>
+    <div>
         <button id="myBtnF">More info's</button>
 
         <div id="myModalF" class="modal">
@@ -63,23 +71,30 @@
         </div>
     </div>
 
-    <div class="infoHarald">
+    <div class="info2">
         <p class="name">
             harald sigurdsson
         </p>
         <p class="health">
             health :<br>
-            <p id="healthResultF"></p>
+            <p id="health2">
+
+            </p>
         </p>
         <p class="power">
             Power : <br>
-            <p id="powerResultF"></p>
+            <p id="power2">
+
+            </p>
         </p>
         <p class="weapon">
             Weapon name : <br>
-            <p id="weaponNameH"></p>
-        </p>
+            <p id="weapon2">
 
+            </p>
+        </p>
+    </div>
+    <div>
         <button id="myBtn">More info's</button>
 
         <div id="myModal" class="modal">
@@ -127,10 +142,11 @@
         </p>
     </footer>
     <script src="js/jquery-3.3.1.js"></script>
-    <script type="text/javascript" src="js/game.js"></script>
-    <script type="text/javascript" src="js/map.js"></script>
-    <script type="text/javascript" src="js/heroes.js"></script>
-    <script type="text/javascript" src="js/modal.js"></script>
+    <script src="js/game.js"></script>
+    <script src="js/map.js"></script>
+    <script src="js/heroes.js"></script>
+    <script src="js/move.js"></script>
+    <script src="js/modal.js"></script>
 
 </body>
 

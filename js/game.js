@@ -1,18 +1,17 @@
-
-var game = {};
+var game = {} //constructor
 
 game.new = function () {
-    console.log("New fight!!!")
 
-game.map.createMap();
-game.map.createWall();
-game.map.createWeapons();
-game.heroes.createHeroes();
-
-game.update();
+    game.map.addMap();
+    game.map.addWall();
+    game.map.addWeapon();
+    game.heroes.addHeroes();
+    //alert(game.heroes[game.heroes.turn].name + " begins the duel without honor ")
+    game.update();
 }
 
 game.update = function () {
     game.heroes.info();
-    game.map.calculMove();
+    game.move.classMove();
 }
+
