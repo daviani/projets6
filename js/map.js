@@ -62,27 +62,27 @@ game.map.addWall = function () {
 game.weaponsBoard = {
     weapon0: {
         name: "Stone",
-        damage: 5,
+        power: 5,
         cssClass: ""
     },
     weapon1: {
         name: "Bone Knife",
-        damage: 10,
+        power: 10,
         cssClass: "knife"
     },
     weapon2: {
         name: "War Axe",
-        damage: 15,
+        power: 15,
         cssClass: "axe"
     },
     weapon3: {
         name: "Ulfberth",
-        damage: 20,
+        power: 20,
         cssClass: "sword"
     },
     weapon4: {
         name: "Gungnir",
-        damage: 30,
+        power: 40,
         cssClass: "spear"
     }
 };
@@ -113,7 +113,7 @@ game.map.addWeapon = function () {
         };
     };
 
-    for (var i = 0; i < 2; i++) {
+    for (var i = 0; i < 1; i++) {
         var xWeapon = Math.ceil(Math.random() * 10),
             yWeapon = Math.ceil(Math.random() * 10),
 

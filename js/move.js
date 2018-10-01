@@ -8,8 +8,8 @@ game.move = {} // constructor
 @yClassMove === coordonate X classMove
 @eltRight === define the cells on the right on which classMove applies
 @eltLeft === define the cells on the left on which classMove applies
-@eltUp== define the cells on the up on which classMove applies
-@eltDown== define the cells on the down on which classMove applies
+@eltUp === define the cells on the up on which classMove applies
+@eltDown === define the cells on the down on which classMove applies
 */
 
 game.move.classMove = function () {
@@ -140,7 +140,7 @@ game.move.classMove = function () {
 game.move.movement = function (e) {
 
     if (game.heroes.fight === true) {
-        var escape = (game.heroes.turn === 1) ? 2 : 1;
+        var escape = (game.heroes.turn === 1) ? 2 : 1; 
         game.heroes.attack(escape);
         game.heroes.fight = false;
     };
@@ -172,19 +172,19 @@ game.move.movement = function (e) {
     } else if (xMove < 0) {
         for (var i = 0; i < -xMove; i++) {
             if (eltYMove[xMove1 - 1 + i].getAttribute("type") === "weapon") {
-                game.heroes.changeWeapon(eltYMove, (xMove - 1 + i));
+                game.heroes.changeWeapon(eltYMove, (xMove1 - 1 + i));
             };
         };
     } else if (yMove > 0) {
         for (var i = 0; i < yMove; i++) {
             if (eltXMove[yMove1 - 1 - i].getAttribute("type") === "weapon") {
-                game.heroes.changeWeapon(eltXMove, (yMove - 1 - i));
+                game.heroes.changeWeapon(eltXMove, (yMove1 - 1 - i));
             };
         };
     } else if (yMove < 0) {
         for (var i = 0; i < -yMove; i++) {
             if (eltXMove[yMove1 - 1 + i].getAttribute("type") === "weapon") {
-                game.heroes.changeWeapon(eltXMove, (xMove - 1 + i))
+                game.heroes.changeWeapon(eltXMove, (yMove1 - 1 + i))
             };
         };
     };
@@ -214,7 +214,7 @@ game.move.movement = function (e) {
         game.heroes[currentHeroes].yPosition = yMove1;
     };
 
-    game.heroes[game.heroes.turn].action = "defence"; //fight === false
+    game.heroes[game.heroes.turn].posture = "defence"; //fight === false
     game.heroes.turn = (game.heroes.turn === 1) ? 2 : 1; // turn next
     game.update();
 };
