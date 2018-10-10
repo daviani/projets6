@@ -30,10 +30,10 @@ game.map.addMap = function () {
 
 //-ADD WALL-_________________________________________________________________________________
 /*
-@nbWall === number of wall
-@xWall === coordonate X Wall
-@yWall === coordonate Y Wall
-@WallElt === selects a cell with xWall & yWall
+@nbWall === nombre de montagne
+@xWall === définie la coordonée de Xwall 
+@yWall === définie la coordonée de Ywall 
+@WallElt === place xWall & yWall dans le tableau
 */
 
 game.map.addWall = function () {
@@ -62,22 +62,22 @@ game.map.addWall = function () {
 game.weaponsBoard = {
     weapon0: {
         name: "Stone",
-        power: 5,
-        cssClass: ""
+        power: 10,
+        cssClass: "stone"
     },
     weapon1: {
         name: "Bone Knife",
-        power: 10,
+        power: 15,
         cssClass: "knife"
     },
     weapon2: {
         name: "War Axe",
-        power: 15,
+        power: 20,
         cssClass: "axe"
     },
     weapon3: {
         name: "Ulfberth",
-        power: 20,
+        power: 25,
         cssClass: "sword"
     },
     weapon4: {
@@ -91,14 +91,13 @@ game.weaponsBoard = {
 //-ADD WEAPON-________________________________________________________________________________
 game.map.addWeapon = function () {
     /*
-    @nbWeapon === defined a number of weapons between 8 & 4
-    @rdm === defined a number 1 & 4 for weapons
-    @xWeapon === coordonate X Weapon
-    @yWeapon === coordonate Y Weapon
-    @WeaponElt === define a cell using the values of the variables : xWall & yWeapon
+    @nbWeapon === nombre d'arme
+    @xWeapon === définie la coordonée de xWeapon 
+    @yWeapon === définie la coordonée de yWeapon 
+    @WeaponElt === place xWeapon & yWeapon dans le tableau
     */
 
-    for (var i = 0; i < 2; i++) {
+    for (var i = 0; i < 1; i++) {
         var xWeapon = Math.ceil(Math.random() * 10),
             yWeapon = Math.ceil(Math.random() * 10),
 
@@ -157,25 +156,6 @@ game.map.addWeapon = function () {
             i--
         };
     };
-}
-/*
-var nbWeapon = 4
-for (var i = 0; i < nbWeapon; i++) {
-    var rdm = Math.round((Math.random * 4) - 1),
-        xWeapon = Math.ceil(Math.random() * 10),
-        yWeapon = Math.ceil(Math.random() * 10),
-        weaponElt = document.querySelector(".cell[X='" + xWeapon + "'][Y='" + yWeapon + "']");
-console.log(rdm)
-    if (weaponElt.getAttribute("type") === "") {
-        weaponElt.setAttribute("type", "weapon");
-        weaponElt.setAttribute("weapon", "weapon" +(rdm + 1));
-        weaponElt.classList.add(game.weaponsBoard['weapon' + (rdm + 1)].cssClass);
-        console.log("- " + game.weaponsBoard['weapon' + random].name + "(" + game.weaponsBoard['weapon' + random].damage + "pts)");
-    } else {
-        i--
-    };
 };
-}
-*/
 
 game.map.addMap();

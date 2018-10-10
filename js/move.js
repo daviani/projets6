@@ -1,9 +1,8 @@
 game.move = {} // constructor
 
-
 //-ADD CLASS MOVE-________________________________________________________________________________
 /*
-@currentHeroes === select the heroes whose turn it is 
+@activeTurn === select the heroes whose turn it is 
 @xClassMove === coordonate X classMove
 @yClassMove === coordonate X classMove
 @eltRight === define the cells on the right on which classMove applies
@@ -14,9 +13,9 @@ game.move = {} // constructor
 
 game.move.classMove = function () {
 
-    var currentHeroes = game.heroes.turn,
-        xClassMove = parseInt(game.heroes[currentHeroes].xPosition),
-        yClassMove = parseInt(game.heroes[currentHeroes].yPosition);
+    var activeHeroes = game.heroes.turn,
+        xClassMove = parseInt(game.heroes[activeHeroes].xPosition),
+        yClassMove = parseInt(game.heroes[activeHeroes].yPosition);
 
     //right --------------------------------------------------------------------------------------
     for (var i = 1; i < 4; i++) {
@@ -30,7 +29,7 @@ game.move.classMove = function () {
                 } else if (eltRight.getAttribute("type") === "weapon") {
                     eltRight.setAttribute("type", "move + weapon");
                 };
-                eltRight.classList.add("move" + currentHeroes);
+                eltRight.classList.add("move" + activeHeroes);
                 eltRight.addEventListener("click", game.move.clickMove, false);
             };
         };
@@ -47,7 +46,7 @@ game.move.classMove = function () {
                 } else if (eltLeft.getAttribute("type") === "weapon") {
                     eltLeft.setAttribute("type", "move + weapon");
                 };
-                eltLeft.classList.add("move" + currentHeroes);
+                eltLeft.classList.add("move" + activeHeroes);
                 eltLeft.addEventListener("click", game.move.clickMove, false);
             };
         };
@@ -65,7 +64,7 @@ game.move.classMove = function () {
                 } else if (eltUp.getAttribute("type") === "weapon") {
                     eltUp.setAttribute("type", "move + weapon");
                 };
-                eltUp.classList.add("move" + currentHeroes);
+                eltUp.classList.add("move" + activeHeroes);
                 eltUp.addEventListener("click", game.move.clickMove, false);
             };
         };
@@ -83,73 +82,77 @@ game.move.classMove = function () {
                 } else if (eltDown.getAttribute("type") === "weapon") {
                     eltDown.setAttribute("type", "move + weapon");
                 };
-                eltDown.classList.add("move" + currentHeroes);
+                eltDown.classList.add("move" + activeHeroes);
                 eltDown.addEventListener("click", game.move.clickMove, false);
             };
         };
     };
 
-    //fight ?? ----------------------------------------------------------------------------------
-    var elt1 = document.querySelector(".cell[X='" + xClassMove + "'][Y='" + (yClassMove - 1) + "']"),
-        elt2 = document.querySelector(".cell[X='" + xClassMove + "'][Y='" + (yClassMove + 1) + "']"),
-        elt3 = document.querySelector(".cell[X='" + (xClassMove - 1) + "'][Y='" + yClassMove + "']"),
-        elt4 = document.querySelector(".cell[X='" + (xClassMove + 1) + "'][Y='" + yClassMove + "']");
+    //fight POSSIBLE ?? ----------------------------------------------------------------------------------
+    var fightRight = document.querySelector(".cell[X='" + (xClassMove + 1) + "'][Y='" + yClassMove + "']"),
+        fightLeft = document.querySelector(".cell[X='" + (xClassMove - 1) + "'][Y='" + yClassMove + "']"),
+        fightUp = document.querySelector(".cell[X='" + xClassMove + "'][Y='" + (yClassMove + 1) + "']"),
+        fightDown = document.querySelector(".cell[X='" + xClassMove + "'][Y='" + (yClassMove - 1) + "']");
+
 
     // if the case exists -------------------------------------------------------------------
-    if (elt1) {
-        if (elt1.getAttribute("type") === "heroes") {
+    if (fightDown) {
+        if (fightDown.getAttribute("type") === "heroes") {
             game.heroes.fight = true;
         };
     };
 
-    if (elt2) {
-        if (elt2.getAttribute("type") === "heroes") {
+    if (fightUp) {
+        if (fightUp.getAttribute("type") === "heroes") {
             game.heroes.fight = true;
         };
     };
 
-    if (elt3) {
-        if (elt3.getAttribute("type") === "heroes") {
+    if (fightLeft) {
+        if (fightLeft.getAttribute("type") === "heroes") {
             game.heroes.fight = true;
         };
     };
 
-    if (elt4) {
-        if (elt4.getAttribute("type") === "heroes") {
+    if (fightRight) {
+        if (fightRight.getAttribute("type") === "heroes") {
             game.heroes.fight = true;
         };
     };
+
+    // MAJ DOM-------------------------------------------------------------------
 
     var buttonAttack = document.getElementById("attack"),
         buttonDefence = document.getElementById("defence");
 
     if (game.heroes.fight === true) {
         buttonAttack.disable = false;
-        buttonAttack.style.backgroundColor = "#365B61";
-        buttonAttack.style.color = "#DDD7C0";
-        buttonDefence.disable =false;
-        buttonDefence.style.backgroundColor = "#365B61";
-        buttonDefence.style.color = "##DDD7C0";
+        buttonAttack.style.visibility = "visible";
+        buttonDefence.disable = false;
+        buttonDefence.style.visibility = "visible";
+
+        $('.name, .health, .power, .weapon, #health1, #health2, #power1, #power2, #weapon1, #weapon2').css('color', '#960001');
     } else {
-        buttonAttack.disable = true;
-        buttonDefence.disable = true;
-    }
+        buttonAttack.style.visibility = "hidden";
+        buttonDefence.style.visibility = "hidden";
+        $('.name, .health, .power, .weapon, #health1, #health2, #power1, #power2, #weapon1, #weapon2').css('color', '#0D3942');
+    };
 };
 
 //-MOVEMENT -________________________________________________________________________________
 game.move.movement = function (e) {
 
     if (game.heroes.fight === true) {
-        var escape = (game.heroes.turn === 1) ? 2 : 1; 
+        var escape = (game.heroes.turn === 1) ? 2 : 1;
         game.heroes.attack(escape);
         game.heroes.fight = false;
     };
 
-    var currentHeroes = game.heroes.turn,
+    var activeTurn = game.heroes.turn,
 
         // initiale coordinate-------------------------------------------------------------------------
-        xMove0 = parseInt(game.heroes[currentHeroes].xPosition),
-        yMove0 = parseInt(game.heroes[currentHeroes].yPosition),
+        xMove0 = parseInt(game.heroes[activeTurn].xPosition),
+        yMove0 = parseInt(game.heroes[activeTurn].yPosition),
         eltMove0 = document.querySelector(".cell[X='" + xMove0 + "'][Y='" + yMove0 + "']"),
 
         //final coordinate --------------------------------------------------------------------------
@@ -194,24 +197,24 @@ game.move.movement = function (e) {
 
         if (eltMove1.getAttribute("type") === "weapon") { // if final cell === weapon
             eltMove1.setAttribute("type", "heroes+weapon");
-            eltMove1.classList.remove(game.heroes[eltMove1.getAttribute("weapon")].cssCLass);
-            eltMove1.classList.add(game.heroes[currentHeroes].cssCLass);
+            eltMove1.classList.remove(game.weaponsBoard[eltMove1.getAttribute("weapon")].cssClass);
+            eltMove1.classList.add(game.heroes[activeTurn].cssClass);
         } else {
             eltMove1.setAttribute("type", "heroes");
-            eltMove1.classList.add(game.heroes[currentHeroes].cssCLass);
+            eltMove1.classList.add(game.heroes[activeTurn].cssClass);
         };
 
         if (eltMove0.getAttribute("type") === "heroes+weapon") { // initial cell type === weapon+heroes
             eltMove0.setAttribute("type", "weapon");
-            eltMove0.classList.remove(game.heroes[currentHeroes].cssCLass);
-            eltMove0.classList.add(game.heroes[eltMove0.getAttribute("weapon")].cssCLass);
+            eltMove0.classList.remove(game.heroes[activeTurn].cssClass);
+            eltMove0.classList.add(game.weaponsBoard[eltMove0.getAttribute("weapon")].cssClass);
         } else {
             eltMove0.setAttribute("type", "");
-            eltMove0.classList.remove(game.heroes[currentHeroes].cssCLass)
+            eltMove0.classList.remove(game.heroes[activeTurn].cssClass)
         };
 
-        game.heroes[currentHeroes].xPosition = xMove1;
-        game.heroes[currentHeroes].yPosition = yMove1;
+        game.heroes[activeTurn].xPosition = xMove1;
+        game.heroes[activeTurn].yPosition = yMove1;
     };
 
     game.heroes[game.heroes.turn].posture = "defence"; //fight === false
@@ -227,11 +230,14 @@ game.move.clickMove = function (e) {
 
 //-DELETE MOVE-________________________________________________________________________________
 game.move.deleteMove = function () {
-
-
-    var currentHeroes = game.heroes.turn,
-        xDelete = parseInt(game.heroes[currentHeroes].xPosition),
-        yDelete = parseInt(game.heroes[currentHeroes].yPosition);
+/*
+    @activeTurn === select the heroes whose turn it is 
+    @xClassMove === coordonate X classMove
+    @yClassMove === coordonate X classMove
+*/
+    var activeTurn = game.heroes.turn,
+        xDelete = parseInt(game.heroes[activeTurn].xPosition),
+        yDelete = parseInt(game.heroes[activeTurn].yPosition);
 
     //right --------------------------------------------------------------------------------------
     for (var i = 1; i < 4; i++) {
@@ -239,11 +245,11 @@ game.move.deleteMove = function () {
         if (elt) {
             if (elt.getAttribute("type") === ("move")) {
                 elt.setAttribute("type", "");
-                elt.classList.remove("move" + currentHeroes);
+                elt.classList.remove("move" + activeTurn);
                 elt.removeEventListener("click", game.move.clickMove, false);
             } else if (elt.getAttribute("type") === ("move + weapon")) {
                 elt.setAttribute("type", "weapon");
-                elt.classList.remove("move" + currentHeroes);
+                elt.classList.remove("move" + activeTurn);
                 elt.removeEventListener("click", game.move.clickMove, false);
             };
         };
@@ -254,10 +260,10 @@ game.move.deleteMove = function () {
         if (elt) {
             if (elt.getAttribute("type") === ("move")) {
                 elt.setAttribute("type", "");
-                elt.classList.remove("move" + currentHeroes)
+                elt.classList.remove("move" + activeTurn)
             } else if (elt.getAttribute("type") === ("move + weapon")) {
                 elt.setAttribute("type", "weapon");
-                elt.classList.remove("move" + currentHeroes);
+                elt.classList.remove("move" + activeTurn);
                 elt.removeEventListener("click", game.move.clickMove, false)
             };
         };
@@ -269,10 +275,10 @@ game.move.deleteMove = function () {
         if (elt) {
             if (elt.getAttribute("type") === ("move")) {
                 elt.setAttribute("type", "");
-                elt.classList.remove("move" + currentHeroes)
+                elt.classList.remove("move" + activeTurn)
             } else if (elt.getAttribute("type") === ("move + weapon")) {
                 elt.setAttribute("type", "weapon");
-                elt.classList.remove("move" + currentHeroes);
+                elt.classList.remove("move" + activeTurn);
                 elt.removeEventListener("click", game.move.clickMove, false)
             };
         };
@@ -284,10 +290,10 @@ game.move.deleteMove = function () {
         if (elt) {
             if (elt.getAttribute("type") === ("move")) {
                 elt.setAttribute("type", "");
-                elt.classList.remove("move" + currentHeroes)
+                elt.classList.remove("move" + activeTurn)
             } else if (elt.getAttribute("type") === ("move + weapon")) {
                 elt.setAttribute("type", "weapon");
-                elt.classList.remove("move" + currentHeroes);
+                elt.classList.remove("move" + activeTurn);
                 elt.removeEventListener("click", game.move.clickMove, false)
             };
         };

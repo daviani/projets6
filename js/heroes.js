@@ -21,7 +21,7 @@ game.heroes.addHeroes = function () {
         yPosition: 0,
         weapon: "weapon0",
         posture: "defence",
-        cssCLass: "freydis"
+        cssClass: "freydis"
     };
 
     game.heroes[2] = {
@@ -31,7 +31,7 @@ game.heroes.addHeroes = function () {
         yPosition: 0,
         weapon: "weapon0",
         posture: "defence",
-        cssCLass: "harald"
+        cssClass: "harald"
     };
 
     for (var i = 1; i < 3; i++) {
@@ -60,30 +60,21 @@ game.heroes.addHeroes = function () {
             i--
         } else {
             EltHeroes1.setAttribute("type", "heroes");
-            EltHeroes1.classList.add(game.heroes[i].cssCLass)
+            EltHeroes1.classList.add(game.heroes[i].cssClass)
         };
     };
 
     game.heroes.turn = Math.round(Math.random() + 1);
 
-
     // add DOM main info-------------------------------------------------------------------------
-    var activeTurn = document.getElementsByClassName("info" + game.heroes.turn),
-        inactiveTurn = document.getElementById("info" + game.heroes.turn === 1) ? 2 : 1,
 
-        health1 = document.getElementById("health1"),
+    var health1 = document.getElementById("health1"),
         power1 = document.getElementById("power1"),
         weaponName1 = document.getElementById("weapon1"),
 
         health2 = document.getElementById("health2"),
         power2 = document.getElementById("power2"),
         weaponName2 = document.getElementById("weapon2");
-
-    if (activeTurn) {
-        $(activeTurn).css('opacity', 1);
-    } else if (inactiveTurn) {
-        $(inactiveTurn).css('opacity', 0.6)
-    }
 
 
     health1.innerHTML = "-" + game.heroes[1].health + "-";
@@ -93,124 +84,79 @@ game.heroes.addHeroes = function () {
     health2.innerHTML = "-" + game.heroes[2].health + "-";
     power2.innerHTML = "-" + game.weaponsBoard[game.heroes[2].weapon].power + "-";
     weaponName2.innerHTML = "-" + game.weaponsBoard[game.heroes[2].weapon].name + "-";
+
 };
 
 //-INFO-_________________________________________________________________________________
 game.heroes.info = function () {
-
+    /*
+    for the elements that are checked and updated on each turn
+    */
     if (game.heroes[1].health <= 0) {
         alert("Freydís Eiríksdóttir is dead, click on OK to restart the game");
+        game.heroes.fight = false;
         game.new()
     };
 
     if (game.heroes[2].health <= 0) {
         alert("Harald Sigurdsson is dead, click on OK to restart the game");
+        game.heroes.fight = false;
         game.new()
     };
+
+    $(".info1").fadeTo(400, 0.4);
+    $(".info2").fadeTo(400, 0.4);
+    $(".info" + game.heroes.turn).fadeTo(400, 1)
 };
 
 //-CHANGE WEAPON-_________________________________________________________________________________
 game.heroes.changeWeapon = function (elt, nb) {
+    /*
+    @replace === selects the box from where the weapon will be replaced
+    @updatePower === brings to light the strength of the heroes 
+    @updateName === brings to light the name of the heroes' weapon
+    */
+
     console.log(elt);
     console.log(nb);
 
     var replace = elt[nb].getAttribute("weapon"),
-        activeTurn = game.heroes.turn,
-        updatePower = document.getElementById("power" + activeTurn),
-        updateName = document.getElementById("weapon" + activeTurn);
-    if (game.heroes[activeTurn].weapon === "weapon0") {
-        elt[nb].classList.remove(game.weaponsBoard[elt[nb].getAttribute("weapon")].cssCLass);
-        elt[nb].setAttribute("weapon", "");
-        elt[nb].setAttribute("type", "");
-        game.heroes[activeTurn].weapon = replace;
+        updatePower = document.getElementById("power" + game.heroes.turn),
+        updateName = document.getElementById("weapon" + game.heroes.turn);
 
-        //maj DOM info
-        updatePower.innerHTML = "-" + game.weaponsBoard[game.heroes[activeTurn].weapon].power + "-";
-        updateName.innerHTML = "-" + game.weaponsBoard[game.heroes[activeTurn].weapon].name + "-";
-    } else {
-        elt[nb].classList.remove(game.weaponsBoard[elt[nb].getAttribute("weapon" + activeTurn)].cssCLass);
-        elt[nb].classList.add(game.weaponsBoard[game.heroes[activeTurn].weapon].cssCLass);
+    elt[nb].classList.remove(game.weaponsBoard[elt[nb].getAttribute("weapon")].cssClass);
+    elt[nb].classList.add(game.weaponsBoard[game.heroes[game.heroes.turn].weapon].cssClass);
 
-        elt[nb].setAttribute("weapon", game.heroes[activeTurn].weapon);
-        elt[nb].setAttribute("type", "weapon");
+    elt[nb].setAttribute("weapon", game.heroes[game.heroes.turn].weapon);
+    elt[nb].setAttribute("type", "weapon");
 
-        game.heroes[activeTurn].weapon = replace;
+    game.heroes[game.heroes.turn].weapon = replace;
 
-        updatePower.innerHTML = "-" + game.weaponsBoard[game.heroes[activeTurn].weapon].power + "-";
-        updateName.innerHTML = "-" + game.weaponsBoard[game.heroes[activeTurn].weapon].name + "-";
-    };
+    updatePower.innerHTML = "-" + game.weaponsBoard[game.heroes[game.heroes.turn].weapon].power + "-";
+    updateName.innerHTML = "-" + game.weaponsBoard[game.heroes[game.heroes.turn].weapon].name + "-";
 };
-
-
-
-/*    var replace = elt[nb].getAttribute("weapon"),
-        activeTurn = game.heroes.turn,
-        updatePower = document.getElementById("power" + activeTurn),
-        updateName = document.getElementById("weapon" + activeTurn);
-
-    if (game.heroes[activeTurn].weapon === "weapon0") {
-        elt[nb].classList.remove(game.weaponsBoard[elt[nb].getAttribute("weapon")].cssClass);
-        elt[nb].setAttribute("weapon", "");
-        elt[nb].setAttribute("type", "");
-        game.heroes[activeTurn].weapon = replace;
-
-        updatePower.innerHTML = "-" + game.weaponsBoard[game.heroes[activeTurn].weapon].power + "-";
-        updateName.innerHTML = "-" + game.weaponsBoard[game.heroes[activeTurn].weapon].name + "-";
-    } else {
-        elt[nb].classList.remove(game.weaponsBoard[elt[nb].getAttribute("weapon")].cssClass);
-        elt[nb].classList.add(game.weaponsBoard[game.heroes[activeTurn].weapon].cssClass);
-
-        elt[nb].setAttribute("weapon", game.heroes[activeTurn].weapon);
-        elt[nb].setAttribute("type", "weapon");
-
-        game.heroes[activeTurn].weapon = replace;
-
-        updatePower.innerHTML = "-" + game.weaponsBoard[game.heroes[activeTurn].weapon].power + "-";
-        updateName.innerHTML = "-" + game.weaponsBoard[game.heroes[activeTurn].weapon].name + "-";
-    };*/
-/*
-    var change = elt[nb].getAttribute("weapon"), // Stock pour le changement
-        turn = game.heroes.turn,
-        updateWPower = document.getElementById("power" + turn),
-        updateWName = document.getElementById("weapon" + turn);
-    console.log(turn)
-
-    var replace = elt[nb].getAttribute("weapon");
-    if (game.heroes[turn].weapon === "weapon0") {
-        elt[nb].setAttribute("weapon", "");
-        elt[nb].setAttribute("type", "");
-        game.heroes[turn].weapon = change;
-
-        var updateWPower = document.getElementById("power" + turn),
-            updateWName = document.getElementById("weapon" + turn);
-
-        updateWPower.innerHTML = "-" + game.weaponsBoard[game.heroes[turn].weapon].power + "-";
-        updateWName.innerHTML = "-" + game.weaponsBoard[game.heroes[turn].weapon].name + "-";
-    } else {
-        elt[nb].classList.remove(game.weaponsBoard[elt[nb].getAttribute("weapon")].cssCLass);
-        elt[nb].classList.add(game.weaponsBoard[game.heroes[turn].weapon].classList);
-
-        elt[nb].setAttribute("weapon", game.heroes[turn].weapon);
-        elt[nb].setAttribute("type", "weapon");
-
-        game.heroes[game.heroes.turn].weapon = replace;
-
-        updateWPower.innerHTML = "-" + game.weaponsBoard[game.heroes[turn].weapon].power + "-";
-        updateWName.innerHTML = "-" + game.weaponsBoard[game.heroes[turn].weapon].name + "-";
-    };
-*/
 
 
 
 //-FIGHT ATTACK-_________________________________________________________________________________
 game.heroes.attack = function (escape) {
+    /*
+@activeTurn === select the heroes whose turn it is
+@activeTurn=== select heroes whose turn it is not
+@escapeHealth === select the health of the heroes on our side it's our turn
+@escapeDamage === calculates the damage in case of escape of the hero
+@healthId === select the html tag dedicated to the health of the heroes whose turn it is
+@damage === calculates the strength of the hero whose turn it is
+@inactiveHealth === finds the health of the hero whose turn it is not
+@inactiveHealthId === select the html tag dedicated to the health of heroes whose turn it is not
+    */
     var activeTurn = game.heroes.turn,
-        inactiveTurn = (activeTurn === 1) ? 2 : 1;
+        inactiveTurn = (game.heroes.turn === 1) ? 2 : 1;
     if (escape) {
         var escapeHealth = game.heroes[activeTurn].health,
-            escapePower = game.weaponsBoard[game.heroes[escape].weapon].power + 40;
+            escapeDamage = game.weaponsBoard[game.heroes[escape].weapon].power + 50;
 
-        escapeHealth -= escapePower;
+        escapeHealth -= escapeDamage;
         game.heroes[activeTurn].health = escapeHealth;
 
         //update DOM :
@@ -219,86 +165,25 @@ game.heroes.attack = function (escape) {
         alert(game.heroes[activeTurn].name + " runs away, the deceitful " + game.heroes[inactiveTurn].name + " takes advantage of it to hit him in the back!");
     } else {
         game.heroes[activeTurn].posture = "attack";
-        var power = game.weaponsBoard[game.heroes[activeTurn].weapon].power;
+        var damage = game.weaponsBoard[game.heroes[activeTurn].weapon].power;
         var inactiveHealth = game.heroes[inactiveTurn].health;
         if (game.heroes[inactiveTurn].posture === "defence") {
-            power /= 2;
-            inactiveHealth -= power;
+            damage /= 2;
+            inactiveHealth -= damage;
             game.heroes[inactiveTurn].health = inactiveHealth;
 
             var inactiveHealthId = document.getElementById("health" + inactiveTurn);
             inactiveHealthId.innerHTML = "-" + inactiveHealth + "-";
         } else {
-            inactiveHealth -= power;
+            inactiveHealth -= damage;
             game.heroes[inactiveTurn].health = inactiveHealth;
+            var inactiveHealthId = document.getElementById("health" + inactiveTurn);
             inactiveHealthId.innerHTML = "-" + inactiveHealth + "-";
         };
         game.move.deleteMove();
-        inactiveTurn = (activeTurn === 1) ? 2 : 1;
+        game.heroes.turn = (game.heroes.turn === 1) ? 2 : 1;
         game.update();
-    }
-
-
-
-
-
-
-    /*
-    var activeTurn = game.heroes.turn,
-        inactiveTurn = (activeTurn === 1) ? 2 : 1,
-        escapeHealth = game.heroes[activeTurn].health,
-        power = game.weaponsBoard[game.heroes[escape].weapon].power,
-        escapePower = game.weaponsBoard[game.heroes[escape].weapon].power + 40,
-        health = document.getElementById("health" + activeTurn),
-        eltHealth = document.getElementById("health" + inactiveTurn);
-
-    if (escape) { // si fuite, joeurs fuiyard reçois une punitions
-        escapeHealth -= escapePower;
-        game.heroes[activeTurn].health = escapeHealth;
-    } else {
-        game.heroes[activeTurn].posture = "attack";
-        power;
-        health;
-        if (game.heroes[inactiveTurn].posture === "defence") {
-            power /=2;
-            health -= power;
-            game.heroes[inactiveTurn].health = health;
-        }
-    }
-*/
-    /*var turn = game.heroes.turn,
-        newTurn = (game.heroes.turn === 1) ? 2 : 1;
-
-    if (away) { // === fuite
-        var awayHealth = game.heroes[turn].health,
-            power = game.weaponsBoard[game.heroes[away].weapon].power + 30;
-        awayHealth -= power;
-        game.heroes[turn].health = awayHealth;
-
-        //update dom info
-        var health = document.getElementById("health" + turn);
-        health.innerHTML = "- " + awayHealth + " -";
-    } else {
-        game.heroes[turn].posture = "attack";
-
-        var power = game.weaponsBoard[game.heroes[espace].weapon].power,
-            health = game.hereos[newTurn].health;
-        if (game.heroes[newTurn].posture === "defence") {
-            power /= 2;
-            health -= power;
-            game.heroes[newTurn].health = health;
-            var eltHealth = document.getElementById("health" + newTurn);
-            eltHealth.innerHTML = "-" + health + "-";
-        } else {
-            health -= power;
-            game.heroes[newTurn].health = health;
-            var eltHealth = document.getElementById("health" + newTurn);
-            eltHealth.innerHTML = "-" + health + "-";
-        };
-        game.move.deleteMove();
-        turn = (turn === 1) ? 2 : 1;
-        game.update;
-    };*/
+    };
 };
 
 //-FIGHT DEFENCE-_________________________________________________________________________________
